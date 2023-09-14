@@ -45,8 +45,6 @@ client = chromadb.Client()
 embedding_model = embedding_functions.OpenAIEmbeddingFunction(model_name="text-embedding-ada-002" , )
 
 text_embeddings = embedding_model(split_text)
-
-print(text_embeddings)
 #Creating Ids
 
 id = []
@@ -54,8 +52,6 @@ for i in range(len(split_text)):
     id.append(str(i))
     
 
-# %%
-print(len(id) , len(split_text) , len(text_embeddings))
 
 # %%
 collection = client.get_or_create_collection(name = "APPLE.pdf" , embedding_function=embedding_model) 
@@ -73,8 +69,6 @@ results = collection.query(
     n_results=4
 )
 
-print(len(results["documents"]))
-
 
 
 # %%
@@ -89,12 +83,6 @@ response = openai.ChatCompletion.create(
 )
 
 # %%
-response['choices'][0]['message']['content']
-print(context)
+print(response['choices'][0]['message']['content'])
 
 #BACKEND COMPLETE
-
-# %%
-
-
-
