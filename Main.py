@@ -1,7 +1,7 @@
 # %%
 import PyPDF2 as pdf
 
-PDF = open('APPLE.pdf' , 'rb')
+PDF = open('PdfAnalyzer/APPLE.pdf' , 'rb')
 
 pages = pdf.PdfReader(PDF).pages
 
@@ -82,7 +82,26 @@ response = openai.ChatCompletion.create(
     ]
 )
 
+
+
+def locate_response(input_data):
+    results = collection.query(
+    query_texts=[input_data],
+    n_results=4
+)
+
+
+
 # %%
-print(response['choices'][0]['message']['content'])
+    context = results["documents"]
+
+    response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": f"You are a helpful assistant and you will answer the question given by the user in a breif 30 - 70 words based on the given context marked by triple quotes.Do not make anything up. After every chat say thank you for asking the question. If you do not know the answer based on the context say 'I do not know the answer'. context : {context}"},
+        {"role": "user", "content": input_data},
+    ]
+)
+    return response['choices'][0]['message']['content']
 
 #BACKEND COMPLETE
