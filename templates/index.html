@@ -1,17 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Input Page</title>
+    <title>My Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Form Input Page</h1>
-    
-    <form method="POST" action="/">
-        <label for="var">Enter something:</label>
-        <input type="text" id="var" name="var" required>
-        <button type="submit">Submit</button>
+    <form id="myForm" method="POST">
+        <input type="text" name="var" id="var" placeholder="Enter a value">
+        <input type="submit" value="Submit">
     </form>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myForm').submit(function (e) {
+                e.preventDefault(); // Prevent the form from submitting the traditional way
+                
+                // Get the value from the input field
+                var inputValue = $('#var').val();
+
+                // Make an AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/',
+                    data: { 'var': inputValue }, // Send the form data
+                    success: function (response) {
+                        // Update the content of the result div with the received variable
+                        $('#result').html("Received Variable: " + response.variable);
+                        console.log(response.variable); // You can access the returned variable
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

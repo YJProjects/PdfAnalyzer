@@ -1,7 +1,7 @@
 # %%
 import PyPDF2 as pdf
 
-PDF = open('PdfAnalyzer/APPLE.pdf' , 'rb')
+PDF = open('APPLE.pdf' , 'rb')
 
 pages = pdf.PdfReader(PDF).pages
 
